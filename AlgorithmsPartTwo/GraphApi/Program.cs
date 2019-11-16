@@ -9,7 +9,7 @@ namespace GraphApi
         {
             string filePath = "C:\\AlgorithmProblemSets\\GraphInput.txt";
 
-            IGraph graph = new Graph(filePath);
+            IGraph g = Graph.InitializeGraph(filePath);
         }
     }
 }
