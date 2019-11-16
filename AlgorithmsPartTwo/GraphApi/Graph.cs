@@ -86,8 +86,16 @@ namespace Algorithms.GraphApi
         /// <inheritdoc/>
         public override string ToString()
         {
+            string output = string.Empty;
+            for(int v = 0; v < _adj.Length; v++)
+            {
+                foreach(int w in _adj[v])
+                {
+                    output += $"{v}-{w}\n";
+                }
+            }
             //Print each edge as "v-w"
-            return base.ToString();
+            return output;
         }
     }
 }
