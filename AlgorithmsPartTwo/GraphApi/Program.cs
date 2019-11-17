@@ -16,7 +16,15 @@ namespace GraphApi
             Console.WriteLine(g.ToString());
             Console.WriteLine("Check connected paths");
 
-            int sourceVertex = 0;
+            ConnectedComponents cc = new ConnectedComponents(g);
+            Console.WriteLine($"number of connected components: {cc.Count}");
+
+            for (int v = 0; v < g.GetNumberOfVertices(); v++)
+            {
+                Console.WriteLine($"vertex:{v} is part of set:{cc.Id(v)}");
+            }
+
+            /*int sourceVertex = 0;
             BreadthFirstPaths dfp = new BreadthFirstPaths(g, sourceVertex);
 
             for(int destination = 0; destination < g.GetNumberOfVertices(); destination++)
@@ -37,8 +45,7 @@ namespace GraphApi
 
                 Console.WriteLine($"src:{sourceVertex} to {destination}, path:{pathOutput}");
                 Console.WriteLine($"distance to {destination} from {sourceVertex}, {dfp.ShortestPathTo(destination)}\n");
-            }
-            
+            }*/
         }
     }
 }
