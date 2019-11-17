@@ -7,6 +7,7 @@ namespace Algorithms.GraphApi
     {
         private bool[] _marked;
         private int[] _edgeTo;
+        private int[] _distTo;
         private int _source;
 
         public BreadthFirstPaths(Graph g, int s)
@@ -14,6 +15,7 @@ namespace Algorithms.GraphApi
             _source = s;
             _marked = new bool[g.GetNumberOfVertices()];
             _edgeTo = new int[g.GetNumberOfVertices()];
+            _distTo = new int[g.GetNumberOfVertices()];
 
             BFS(g, s);
         }
@@ -34,6 +36,7 @@ namespace Algorithms.GraphApi
                         _marked[z] = true;
                         queue.Enqueue(z);
                         _edgeTo[z] = w;
+                        _distTo[z] = _distTo[w] + 1;
                     }
                 }
             }
@@ -57,8 +60,13 @@ namespace Algorithms.GraphApi
                 path.Push(x);
             }
             path.Push(_source);
-
+            
             return path;
+        }
+
+        public int ShortestPathTo(int v)
+        {
+            return _distTo[v];
         }
     }
 }

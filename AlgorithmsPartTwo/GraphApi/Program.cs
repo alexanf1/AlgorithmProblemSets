@@ -17,7 +17,7 @@ namespace GraphApi
             Console.WriteLine("Check connected paths");
 
             int sourceVertex = 0;
-            IPath dfp = new BreadthFirstPaths(g, sourceVertex);
+            BreadthFirstPaths dfp = new BreadthFirstPaths(g, sourceVertex);
 
             for(int destination = 0; destination < g.GetNumberOfVertices(); destination++)
             {
@@ -32,6 +32,7 @@ namespace GraphApi
                 }
 
                 Console.WriteLine($"src:{sourceVertex} to {destination}, path:{pathOutput}");
+                Console.WriteLine($"distance to {destination} from {sourceVertex}, {dfp.ShortestPathTo(destination)}\n");
             }
             
         }
