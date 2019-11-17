@@ -1,6 +1,7 @@
 ﻿using Algorithms.GraphApi;
 using System;
 using System.Collections.Generic;
+using Algorithms.GraphApi.Interfaces;
 
 namespace GraphApi
 {
@@ -16,7 +17,7 @@ namespace GraphApi
             Console.WriteLine("Check connected paths");
 
             int sourceVertex = 0;
-            DepthFirstPaths dfp = new DepthFirstPaths(g, sourceVertex);
+            IPath dfp = new BreadthFirstPaths(g, sourceVertex);
 
             for(int destination = 0; destination < g.GetNumberOfVertices(); destination++)
             {
@@ -29,6 +30,7 @@ namespace GraphApi
                 {
                     pathOutput += $"{vertex},";
                 }
+
                 Console.WriteLine($"src:{sourceVertex} to {destination}, path:{pathOutput}");
             }
             
