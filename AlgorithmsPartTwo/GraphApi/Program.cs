@@ -23,7 +23,11 @@ namespace GraphApi
             {
                 IEnumerable<int> enumerable = dfp.PathTo(destination);
 
-                if (enumerable == null) continue;
+                if (enumerable == null)
+                {
+                    Console.WriteLine($"src:{sourceVertex} to {destination}, no path exists\n");
+                    continue;
+                }
 
                 string pathOutput = string.Empty;
                 foreach (int vertex in enumerable)

@@ -5,17 +5,15 @@ namespace Algorithms.GraphApi
 {
     internal class BreadthFirstPaths : IPath
     {
-        private bool[] _marked;
         private int[] _edgeTo;
-        private int[] _distTo;
+        private int?[] _distTo;
         private int _source;
 
         public BreadthFirstPaths(Graph g, int s)
         {
             _source = s;
-            _marked = new bool[g.GetNumberOfVertices()];
             _edgeTo = new int[g.GetNumberOfVertices()];
-            _distTo = new int[g.GetNumberOfVertices()];
+            _distTo = new int?[g.GetNumberOfVertices()];
 
             BFS(g, s);
         }
@@ -24,16 +22,15 @@ namespace Algorithms.GraphApi
         {
             Queue<int> queue = new Queue<int>();
             queue.Enqueue(v);
-            _marked[v] = true;
+            _distTo[v] = 0;
 
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 int w = queue.Dequeue();
                 foreach(int z in g.GetAdjacentVertices(w))
                 {
-                    if(!_marked[z])
+                    if(_distTo[z] == null)
                     {
-                        _marked[z] = true;
                         queue.Enqueue(z);
                         _edgeTo[z] = w;
                         _distTo[z] = _distTo[w] + 1;
@@ -44,7 +41,7 @@ namespace Algorithms.GraphApi
 
         public bool HasPathTo(int v)
         {
-            return _marked[v];
+            return _distTo[v] > 0;
         }
 
         public IEnumerable<int> PathTo(int v)
@@ -66,7 +63,7 @@ namespace Algorithms.GraphApi
 
         public int ShortestPathTo(int v)
         {
-            return _distTo[v];
+            return (int) _distTo[v];
         }
     }
 }
