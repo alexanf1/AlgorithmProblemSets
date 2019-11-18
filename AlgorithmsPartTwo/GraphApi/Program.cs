@@ -11,9 +11,9 @@ namespace GraphApi
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\AlgorithmProblemSets\\GraphInput2.txt";
+            string filePath = "C:\\AlgorithmProblemSets\\DirectedGraphInput.txt";
 
-            IGraph g = DirectedGraph.InitializeGraph(filePath);
+            DirectedGraph g = DirectedGraph.InitializeGraph(filePath);
 
             Console.WriteLine(g.ToString());
             Console.WriteLine("Check connected paths");
@@ -29,13 +29,15 @@ namespace GraphApi
             int sourceVertex = 0;
             IPath dfp = new DepthFirstPaths(g, sourceVertex);
 
+            Console.WriteLine($"number of edges {g.GetNumberOfEdges()}");
+
             for(int destination = 0; destination < g.GetNumberOfVertices(); destination++)
             {
                 IEnumerable<int> enumerable = dfp.PathTo(destination);
 
                 if (enumerable == null)
                 {
-                    Console.WriteLine($"src:{sourceVertex} to {destination}, no path exists\n");
+                    Console.WriteLine($"src:{sourceVertex} to {destination}, no path exists");
                     continue;
                 }
 
@@ -46,8 +48,15 @@ namespace GraphApi
                 }
 
                 Console.WriteLine($"src:{sourceVertex} to {destination}, path:{pathOutput}");
-                //Console.WriteLine($"distance to {destination} from {sourceVertex}, {dfp.ShortestPathTo(destination)}\n");
             }
+
+            DepthFirstOrder dfo = new DepthFirstOrder(g);
+            string topologicalOrder = "[bottom]";
+            foreach (int v in dfo.GetReversePostOrder())
+            {
+                topologicalOrder += $"{v},";
+            }
+            Console.WriteLine($"Topological order:{topologicalOrder}[top]");
         }
     }
 }

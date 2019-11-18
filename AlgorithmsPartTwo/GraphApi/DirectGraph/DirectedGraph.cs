@@ -72,13 +72,18 @@ namespace GraphApi.DirectGraph
         /// <inheritdoc/>
         public int GetNumberOfEdges()
         {
-            return _edges / 2;
+            return _edges;
         }
 
         /// <inheritdoc/>
         public int GetNumberOfVertices()
         {
             return _vertices;
+        }
+
+        public DirectedGraph GetReverse()
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <inheritdoc/>
