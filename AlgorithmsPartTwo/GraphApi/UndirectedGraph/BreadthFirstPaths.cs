@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Algorithms.GraphApi.Interfaces;
+using GraphApi.Interfaces;
 
-namespace Algorithms.GraphApi
+namespace GraphApi.UndirectedGraph
 {
     internal class BreadthFirstPaths : IPath
     {

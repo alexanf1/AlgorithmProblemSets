@@ -1,7 +1,8 @@
-﻿using Algorithms.GraphApi;
+﻿using GraphApi.UndirectedGraph;
+using GraphApi.DirectGraph;
 using System;
 using System.Collections.Generic;
-using Algorithms.GraphApi.Interfaces;
+using GraphApi.Interfaces;
 
 namespace GraphApi
 {
@@ -9,20 +10,20 @@ namespace GraphApi
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\AlgorithmProblemSets\\GraphInput.txt";
+            string filePath = "C:\\AlgorithmProblemSets\\GraphInput2.txt";
 
-            Graph g = Graph.InitializeGraph(filePath);
+            IGraph g = DirectedGraph.InitializeGraph(filePath);
 
             Console.WriteLine(g.ToString());
             Console.WriteLine("Check connected paths");
 
-            ConnectedComponents cc = new ConnectedComponents(g);
+            /*ConnectedComponents cc = new ConnectedComponents(g);
             Console.WriteLine($"number of connected components: {cc.Count}");
 
             for (int v = 0; v < g.GetNumberOfVertices(); v++)
             {
                 Console.WriteLine($"vertex:{v} is part of set:{cc.Id(v)}");
-            }
+            }*/
 
             /*int sourceVertex = 0;
             BreadthFirstPaths dfp = new BreadthFirstPaths(g, sourceVertex);

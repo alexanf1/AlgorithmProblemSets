@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Algorithms.GraphApi.Interfaces;
+using GraphApi.Interfaces;
 
-namespace Algorithms.GraphApi
+namespace GraphApi.DirectGraph
 {
-    internal class Graph : IGraph
+    internal class DirectedGraph : IGraph
     {
         private int _vertices;
         private int _edges;
         private LinkedList<int>[] _adj;
 
-        public static Graph InitializeGraph(string fileName)
+        public static DirectedGraph InitializeGraph(string fileName)
         {
             try
             {   // Open the text file using a stream reader.
@@ -21,9 +21,9 @@ namespace Algorithms.GraphApi
                     int vertices = int.Parse(sr.ReadLine());
                     int edges = int.Parse(sr.ReadLine());
 
-                    Graph g = new Graph(vertices);
+                    DirectedGraph g = new DirectedGraph(vertices);
 
-                    while(!sr.EndOfStream)
+                    while (!sr.EndOfStream)
                     {
                         string[] input = sr.ReadLine().Split(" ");
                         int v = int.Parse(input[0]);
@@ -31,7 +31,7 @@ namespace Algorithms.GraphApi
 
                         g.AddEdge(v, w);
                     }
-                    
+
                     return g;
                 }
             }
@@ -45,7 +45,7 @@ namespace Algorithms.GraphApi
         /// Contructs a graph with a fixed number of vertices
         /// </summary>
         /// <param name="vertices">total number of vertices in the graph</param>
-        public Graph(int vertices)
+        public DirectedGraph(int vertices)
         {
             _vertices = vertices;
 
@@ -60,8 +60,7 @@ namespace Algorithms.GraphApi
         public void AddEdge(int v, int w)
         {
             _adj[v].AddLast(w);
-            _adj[w].AddLast(v);
-            _edges += 2;
+            _edges++;
         }
 
         /// <inheritdoc/>
@@ -86,14 +85,13 @@ namespace Algorithms.GraphApi
         public override string ToString()
         {
             string output = string.Empty;
-            for(int v = 0; v < _adj.Length; v++)
+            for (int v = 0; v < _adj.Length; v++)
             {
-                foreach(int w in _adj[v])
+                foreach (int w in _adj[v])
                 {
-                    output += $"{v}-{w}\n";
+                    output += $"{v}->{w}\n";
                 }
             }
-            //Print each edge as "v-w"
             return output;
         }
     }

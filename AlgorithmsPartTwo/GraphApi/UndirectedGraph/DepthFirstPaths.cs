@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Algorithms.GraphApi.Interfaces;
+﻿using System.Collections.Generic;
+using GraphApi.Interfaces;
 
-namespace Algorithms.GraphApi
+namespace GraphApi.UndirectedGraph
 {
     internal class DepthFirstPaths : IPath
     {

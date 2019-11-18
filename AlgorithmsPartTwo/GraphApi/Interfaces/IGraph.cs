@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Algorithms.GraphApi.Interfaces
+namespace GraphApi.Interfaces
 {
     /// <summary>
     /// Simply interface for a implementing a graph data structure
