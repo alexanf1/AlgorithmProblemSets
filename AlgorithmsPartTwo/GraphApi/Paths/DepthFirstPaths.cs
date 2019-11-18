@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GraphApi.Interfaces;
 
-namespace GraphApi.UndirectedGraph
+namespace GraphApi.Paths
 {
     internal class DepthFirstPaths : IPath
     {
@@ -14,7 +14,7 @@ namespace GraphApi.UndirectedGraph
         /// </summary>
         /// <param name="g">The graph</param>
         /// <param name="s">The source vertex</param>
-        public DepthFirstPaths(Graph graph, int source)
+        public DepthFirstPaths(IGraph graph, int source)
         {
             _source = source;
             _marked = new bool[graph.GetNumberOfVertices()];
@@ -23,7 +23,7 @@ namespace GraphApi.UndirectedGraph
             DFS(graph, source);
         }
 
-        private void DFS(Graph g, int v)
+        private void DFS(IGraph g, int v)
         {
             _marked[v] = true;
             foreach(int w in g.GetAdjacentVertices(v))

@@ -1,6 +1,4 @@
-﻿using GraphApi.Interfaces;
-
-namespace GraphApi.UndirectedGraph
+﻿namespace GraphApi.UndirectedGraph
 {
     internal class ConnectedComponents
     {
@@ -11,7 +9,7 @@ namespace GraphApi.UndirectedGraph
         public int Count => _count;
         public int Id(int v) => (int)_ids[v];
 
-        public ConnectedComponents(IGraph g)
+        public ConnectedComponents(UndirectedGraph g)
         {
             _marked = new bool[g.GetNumberOfVertices()];
             _ids = new int?[g.GetNumberOfVertices()];
@@ -26,7 +24,7 @@ namespace GraphApi.UndirectedGraph
             }
         }
 
-        private void DFS(IGraph g, int v, int id)
+        private void DFS(UndirectedGraph g, int v, int id)
         {
             _marked[v] = true;
             _ids[v] = id;

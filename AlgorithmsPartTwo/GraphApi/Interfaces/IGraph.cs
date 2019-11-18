@@ -3,7 +3,7 @@
 namespace GraphApi.Interfaces
 {
     /// <summary>
-    /// Simply interface for a implementing a graph data structure
+    /// Simple interface for a implementing a graph data structure
     /// </summary>
     internal interface IGraph
     {

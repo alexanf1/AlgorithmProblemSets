@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GraphApi.Interfaces;
 
-namespace GraphApi.UndirectedGraph
+namespace GraphApi.Paths
 {
     internal class BreadthFirstPaths : IPath
     {
@@ -9,7 +9,7 @@ namespace GraphApi.UndirectedGraph
         private int?[] _distTo;
         private int _source;
 
-        public BreadthFirstPaths(Graph g, int s)
+        public BreadthFirstPaths(IGraph g, int s)
         {
             _source = s;
             _edgeTo = new int[g.GetNumberOfVertices()];
@@ -18,7 +18,7 @@ namespace GraphApi.UndirectedGraph
             BFS(g, s);
         }
 
-        private void BFS(Graph g, int v)
+        private void BFS(IGraph g, int v)
         {
             Queue<int> queue = new Queue<int>();
             queue.Enqueue(v);

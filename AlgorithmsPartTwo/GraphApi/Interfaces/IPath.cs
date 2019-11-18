@@ -3,7 +3,7 @@
 namespace GraphApi.Interfaces
 {
     /// <summary>
-    /// Finds paths in a graph
+    /// Calculates the paths in a given graph
     /// </summary>
     internal interface IPath
     {

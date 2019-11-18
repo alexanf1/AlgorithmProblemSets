@@ -4,13 +4,13 @@ using GraphApi.Interfaces;
 
 namespace GraphApi.UndirectedGraph
 {
-    internal class Graph : IGraph
+    internal class UndirectedGraph : IGraph
     {
         private int _vertices;
         private int _edges;
         private LinkedList<int>[] _adj;
 
-        public static Graph InitializeGraph(string fileName)
+        public static UndirectedGraph InitializeGraph(string fileName)
         {
             try
             {   // Open the text file using a stream reader.
@@ -21,7 +21,7 @@ namespace GraphApi.UndirectedGraph
                     int vertices = int.Parse(sr.ReadLine());
                     int edges = int.Parse(sr.ReadLine());
 
-                    Graph g = new Graph(vertices);
+                    UndirectedGraph g = new UndirectedGraph(vertices);
 
                     while(!sr.EndOfStream)
                     {
@@ -45,7 +45,7 @@ namespace GraphApi.UndirectedGraph
         /// Contructs a graph with a fixed number of vertices
         /// </summary>
         /// <param name="vertices">total number of vertices in the graph</param>
-        public Graph(int vertices)
+        public UndirectedGraph(int vertices)
         {
             _vertices = vertices;
 

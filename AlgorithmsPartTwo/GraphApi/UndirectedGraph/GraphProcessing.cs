@@ -1,5 +1,4 @@
 ﻿using System;
-using GraphApi.Interfaces;
 
 namespace GraphApi.UndirectedGraph
 {
@@ -10,7 +9,7 @@ namespace GraphApi.UndirectedGraph
         /// </summary>
         /// <param name="graph">vertex v</param>
         /// <returns></returns>
-        public static int degree(IGraph graph, int v)
+        public static int degree(UndirectedGraph graph, int v)
         {
             return graph.GetAdjacentVertices(v).Count;
         }
@@ -20,7 +19,7 @@ namespace GraphApi.UndirectedGraph
         /// </summary>
         /// <param name="graph"></param>
         /// <returns></returns>
-        public static int maxDegree(IGraph graph)
+        public static int maxDegree(UndirectedGraph graph)
         {
             int maxDegree = 0;
             for(int v = 0; v < graph.GetNumberOfVertices(); v++)
@@ -36,7 +35,7 @@ namespace GraphApi.UndirectedGraph
         /// </summary>
         /// <param name="graph"></param>
         /// <returns></returns>
-        public static double averageDegree(IGraph graph)
+        public static double averageDegree(UndirectedGraph graph)
         {
             return 2.0 * graph.GetNumberOfEdges() / graph.GetNumberOfVertices();
         }
@@ -46,7 +45,7 @@ namespace GraphApi.UndirectedGraph
         /// </summary>
         /// <param name="graph"></param>
         /// <returns></returns>
-        public static int numberOfSetLoops(IGraph graph)
+        public static int numberOfSetLoops(UndirectedGraph graph)
         {
             int totalSelfLoops = 0;
             for (int v = 0; v < graph.GetNumberOfVertices(); v++)
