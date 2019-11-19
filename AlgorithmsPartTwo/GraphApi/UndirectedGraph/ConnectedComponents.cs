@@ -9,8 +9,8 @@
         private int?[] _ids;
         private int _count;
 
-        public int Count => _count;
-        public int Id(int v) => (int)_ids[v];
+        public int GetNumberOfConnectedComponents => _count;
+        public int GetConnectedComponentId(int v) => (int)_ids[v];
 
         public ConnectedComponents(UndirectedGraph g)
         {

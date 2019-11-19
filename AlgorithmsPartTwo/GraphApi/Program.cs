@@ -19,11 +19,11 @@ namespace GraphApi
 
             StrongComponents sc = new StrongComponents(g);
 
-            Console.WriteLine($"strongly connected components:{sc.Count}");
+            Console.WriteLine($"strongly connected components:{sc.GetNumberOfStronglyConnectedComponents}");
 
             for(int v = 0; v < g.GetNumberOfVertices(); v++)
             {
-                Console.WriteLine($"vertex {v} is in component {sc.Id(v)}");
+                Console.WriteLine($"vertex {v} is in component {sc.GetStronglyConnectedComponentId(v)}");
             }
 
             //Console.WriteLine("Check connected paths");

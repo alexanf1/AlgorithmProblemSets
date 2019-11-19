@@ -61,6 +61,11 @@ namespace GraphApi.Paths
             return path;
         }
 
+        /// <summary>
+        /// Returns the fewest number of edges required to reach vertex v
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public int ShortestPathTo(int v)
         {
             return (int) _distTo[v];

@@ -4,6 +4,9 @@ using GraphApi.Interfaces;
 
 namespace GraphApi.DirectGraph
 {
+    /// <summary>
+    /// A data structure representation of a digraph (directed graph)
+    /// </summary>
     internal class DirectedGraph : IGraph
     {
         private int _vertices;

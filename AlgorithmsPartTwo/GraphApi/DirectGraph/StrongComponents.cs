@@ -5,8 +5,8 @@ using System.Text;
 namespace GraphApi.DirectGraph
 {
     /// <summary>
-    /// Computing the strongly connected components in a directed graph using two DFSs in E + V linear time.
-    /// This is also known as the KosarajuSharir algorithm
+    /// Computing the strong components in a directed graph using two DFSs in E + V linear time.
+    /// This is also known as the Kosaraju-Sharir algorithm
     /// </summary>
     internal class StrongComponents
     {
@@ -14,8 +14,8 @@ namespace GraphApi.DirectGraph
         private int?[] _ids;
         private int _count;
 
-        public int Count => _count;
-        public int Id(int v) => (int)_ids[v];
+        public int GetNumberOfStronglyConnectedComponents => _count;
+        public int GetStronglyConnectedComponentId(int v) => (int)_ids[v];
         public bool IsStronglyConnectedTo(int v, int w) => _ids[v] == _ids[w];
 
         public StrongComponents(DirectedGraph g)
@@ -23,10 +23,10 @@ namespace GraphApi.DirectGraph
             _marked = new bool[g.GetNumberOfVertices()];
             _ids = new int?[g.GetNumberOfVertices()];
 
-            DirectedGraph rg = g.GetReverse();
-            DepthFirstOrder dfo = new DepthFirstOrder(rg);
+            DirectedGraph reverseGraph = g.GetReverse();
+            DepthFirstOrder dfo = new DepthFirstOrder(reverseGraph);
 
-            foreach(int v in dfo.GetReversePostOrder())
+            foreach(int v in dfo.GetReversePostOrder)
             {
                 if (_ids[v] == null)
                 {
