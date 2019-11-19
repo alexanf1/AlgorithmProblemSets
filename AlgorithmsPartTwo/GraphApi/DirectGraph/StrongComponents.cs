@@ -1,9 +1,14 @@
-﻿namespace GraphApi.UndirectedGraph
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace GraphApi.DirectGraph
 {
     /// <summary>
-    /// Computing the connected components in a undirrected graph using one DFS in E + V linear time.
+    /// Computing the strongly connected components in a directed graph using two DFSs in E + V linear time.
+    /// This is also known as the KosarajuSharir algorithm
     /// </summary>
-    internal class ConnectedComponents
+    internal class StrongComponents
     {
         private bool[] _marked;
         private int?[] _ids;
@@ -11,15 +16,19 @@
 
         public int Count => _count;
         public int Id(int v) => (int)_ids[v];
+        public bool IsStronglyConnectedTo(int v, int w) => _ids[v] == _ids[w];
 
-        public ConnectedComponents(UndirectedGraph g)
+        public StrongComponents(DirectedGraph g)
         {
             _marked = new bool[g.GetNumberOfVertices()];
             _ids = new int?[g.GetNumberOfVertices()];
 
-            for(int v = 0; v < g.GetNumberOfVertices(); v++)
+            DirectedGraph rg = g.GetReverse();
+            DepthFirstOrder dfo = new DepthFirstOrder(rg);
+
+            foreach(int v in dfo.GetReversePostOrder())
             {
-                if(_ids[v] == null)
+                if (_ids[v] == null)
                 {
                     DFS(g, v, _count);
                     _count++;
@@ -27,7 +36,7 @@
             }
         }
 
-        private void DFS(UndirectedGraph g, int v, int id)
+        private void DFS(DirectedGraph g, int v, int id)
         {
             _marked[v] = true;
             _ids[v] = id;

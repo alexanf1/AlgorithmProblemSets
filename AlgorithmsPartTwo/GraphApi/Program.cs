@@ -11,12 +11,22 @@ namespace GraphApi
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\AlgorithmProblemSets\\DirectedGraphInput.txt";
+            string filePath = "C:\\AlgorithmProblemSets\\GraphInput2.txt";
 
             DirectedGraph g = DirectedGraph.InitializeGraph(filePath);
 
-            Console.WriteLine(g.ToString());
-            Console.WriteLine("Check connected paths");
+            Console.WriteLine(g.GetReverse().ToString());
+
+            StrongComponents sc = new StrongComponents(g);
+
+            Console.WriteLine($"strongly connected components:{sc.Count}");
+
+            for(int v = 0; v < g.GetNumberOfVertices(); v++)
+            {
+                Console.WriteLine($"vertex {v} is in component {sc.Id(v)}");
+            }
+
+            //Console.WriteLine("Check connected paths");
 
             //ConnectedComponents cc = new ConnectedComponents(g);
             //Console.WriteLine($"number of connected components: {cc.Count}");
@@ -26,7 +36,7 @@ namespace GraphApi
                 Console.WriteLine($"vertex:{v} is part of set:{cc.Id(v)}");
             }*/
 
-            int sourceVertex = 0;
+            /*int sourceVertex = 0;
             IPath dfp = new DepthFirstPaths(g, sourceVertex);
 
             Console.WriteLine($"number of edges {g.GetNumberOfEdges()}");
@@ -56,7 +66,7 @@ namespace GraphApi
             {
                 topologicalOrder += $"{v},";
             }
-            Console.WriteLine($"Topological order:{topologicalOrder}[top]");
+            Console.WriteLine($"Topological order:{topologicalOrder}[top]");*/
         }
     }
 }

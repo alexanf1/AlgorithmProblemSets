@@ -4,6 +4,10 @@ using System.Text;
 
 namespace GraphApi.DirectGraph
 {
+    /// <summary>
+    /// Calculates the reverse post order of a graph which can also be considered the topological sort order if 
+    /// the graph also happens to be a Directed Acyclic Graph (DAG)
+    /// </summary>
     internal class DepthFirstOrder
     {
         private bool[] _marked;

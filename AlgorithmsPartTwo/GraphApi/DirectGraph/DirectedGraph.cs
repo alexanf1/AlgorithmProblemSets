@@ -83,7 +83,16 @@ namespace GraphApi.DirectGraph
 
         public DirectedGraph GetReverse()
         {
-            throw new System.NotImplementedException();
+            DirectedGraph reversedGraph = new DirectedGraph(_vertices);
+            for (int v = 0; v < _adj.Length; v++)
+            {
+                foreach (int w in _adj[v])
+                {
+                    reversedGraph.AddEdge(w, v);
+                }
+            }
+
+            return reversedGraph;
         }
 
         /// <inheritdoc/>
