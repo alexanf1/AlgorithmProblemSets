@@ -18,11 +18,11 @@ namespace DataStructureApi
             trial.insert('E');
             trial.insert('I');
             trial.insert('G');
+
             trial.insert('S');
-
-
             trial.DeleteMax();
-            Console.WriteLine($"size:{trial.Size}");
+            trial.DeleteMax();
+            trial.insert('S');
             Console.WriteLine($"{trial}");
         }
     }

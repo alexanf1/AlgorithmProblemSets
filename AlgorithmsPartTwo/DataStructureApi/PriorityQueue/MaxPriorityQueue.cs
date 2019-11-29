@@ -38,13 +38,11 @@ namespace DataStructureApi.PriorityQueue
 
             // check if parent exists and if it is smaller than the current inserted element
             int k = _entries;
-            //Console.WriteLine($"{_arr[k]}:{_arr[k / 2]}, {_arr[k].CompareTo(_arr[k / 2])}");
-            while ((k/2) > 0 && (0 < _arr[k].CompareTo(_arr[k / 2])))
+            
+            while ((k/2) > 0 && greater(k, k / 2))
             {
                 // if true than swap
-                T temp = _arr[k];
-                _arr[k] = _arr[k / 2];
-                _arr[k / 2] = temp;
+                swap(k, k / 2);
 
                 // repeat but now examining the new parent
                 k = (k / 2);
@@ -70,24 +68,18 @@ namespace DataStructureApi.PriorityQueue
             {
                 // first discover which child is larger before comparing with root
                 int j = 2 * k;
-                if (j < _entries && 0 < _arr[j+1].CompareTo(_arr[j])) // is the right child larger than the left
+                if (j < _entries && greater(j + 1, j)) // is the right child larger than the left
                 {
                     j++;
                 }
 
                 // 'j' now represents the larger of the two children
-                if((0 < _arr[j].CompareTo(_arr[k])))
+                if (!greater(j, k))
                 {
-                    T temp = _arr[k];
-                    _arr[k] = _arr[j];
-                    _arr[j] = temp;
-                }
-                else
-                {
-                    // based on the rules of a binary heap, we can now terminate the loop
                     break;
                 }
 
+                swap(k, j);
                 k = j;
             }
 
@@ -113,5 +105,19 @@ namespace DataStructureApi.PriorityQueue
 
             return output;
         }
+
+        #region - Private Methods
+        private void swap(int x, int y)
+        {
+            T temp = _arr[x];
+            _arr[x] = _arr[y];
+            _arr[y] = temp;
+        }
+
+        private bool greater(int x, int y)
+        {
+            return 0 < _arr[x].CompareTo(_arr[y]);
+        }
+        #endregion
     }
 }
