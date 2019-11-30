@@ -58,30 +58,11 @@ namespace DataStructureApi.PriorityQueue
             if (_entries < 0)
                 return default;
 
-            T max = _arr[1];
-            _arr[1] = _arr[_entries];
-            _arr[_entries] = default;
+            T max = _arr[1]; // holds the maximum value
+            swap(1, _entries); // swap the maximum with the last entry
+            _arr[_entries] = default; // delete the maximum
             _entries--;
-
-            int k = 1;
-            while (2*k <= _entries) // because of the balance property, if there is no left child then there is none at all)
-            {
-                // first discover which child is larger before comparing with root
-                int j = 2 * k;
-                if (j < _entries && greater(j + 1, j)) // is the right child larger than the left
-                {
-                    j++;
-                }
-
-                // 'j' now represents the larger of the two children
-                if (!greater(j, k))
-                {
-                    break;
-                }
-
-                swap(k, j);
-                k = j;
-            }
+            sink(1); // performing sink on the root
 
             return max;
         }
@@ -107,6 +88,28 @@ namespace DataStructureApi.PriorityQueue
         }
 
         #region - Private Methods
+        private void sink(int k)
+        {
+            while (2*k <= _entries) // because of the balance property, if there is no left child then there is none at all)
+            {
+                // first discover which child is larger before comparing with root
+                int j = 2*k;
+                if (j < _entries && greater(j + 1, j)) // is the right child larger than the left
+                {
+                    j++;
+                }
+
+                // 'j' now represents the larger of the two children
+                if (!greater(j, k))
+                {
+                    break;
+                }
+
+                swap(k, j);
+                k = j;
+            }
+        }
+
         private void swap(int x, int y)
         {
             T temp = _arr[x];
