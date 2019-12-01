@@ -1,9 +1,5 @@
 ﻿using GraphApi.UndirectedGraph;
-using GraphApi.DirectGraph;
 using System;
-using System.Collections.Generic;
-using GraphApi.Interfaces;
-using GraphApi.Paths;
 
 namespace GraphApi
 {
@@ -20,7 +16,7 @@ namespace GraphApi
             foreach (Edge e in mst.GetEdges())
                 Console.WriteLine($"{e}");
 
-            Console.WriteLine("LazyPrimMST");
+            Console.WriteLine("\nLazyPrimMST");
             LazyPrimMST _mst = new LazyPrimMST(g);
             foreach (Edge e in _mst.GetEdges())
                 Console.WriteLine($"{e}");

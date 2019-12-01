@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace GraphApi
+namespace GraphApi.UndirectedGraph
 {
     /// <summary>
     /// Represents an edge weighted undirected graph

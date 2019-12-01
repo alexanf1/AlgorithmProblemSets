@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DataStructureApi.PriorityQueue;
 
-namespace GraphApi
+namespace GraphApi.UndirectedGraph
 {
     /// <summary>
     /// Computes the MST in time proportional to E log E and extra space proportional to E
@@ -35,6 +35,7 @@ namespace GraphApi
                     continue;
 
                 _mst.AddLast(e);
+                _totalWeight += e.Weight;
 
                 if (!_marked[v])
                     Visit(g, v);
@@ -57,7 +58,7 @@ namespace GraphApi
         }
 
         /// <summary>
-        /// Returns all the edges og a given graph that are part of the MST
+        /// Returns all the edges of a given graph that are part of the MST
         /// </summary>
         /// <returns></returns>
         public ICollection<Edge> GetEdges()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DataStructureApi.PriorityQueue;
 
-namespace GraphApi
+namespace GraphApi.UndirectedGraph
 {
     /// <summary>
     /// Biggest difference here is the use of the IndexMinPriority Queue

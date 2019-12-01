@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GraphApi
+namespace GraphApi.UndirectedGraph
 {
     /// <summary>
     /// Represents a undirected edge

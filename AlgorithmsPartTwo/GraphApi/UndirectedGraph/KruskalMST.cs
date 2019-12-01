@@ -4,7 +4,7 @@ using System.Text;
 using DataStructureApi.PriorityQueue;
 using DataStructureApi.UnionFind;
 
-namespace GraphApi
+namespace GraphApi.UndirectedGraph
 {
     /// <summary>
     /// Computes the mst in time proportional to E log E where 'E' is the number of edges
