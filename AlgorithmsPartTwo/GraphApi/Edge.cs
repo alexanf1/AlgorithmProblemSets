@@ -4,6 +4,9 @@ using System.Text;
 
 namespace GraphApi
 {
+    /// <summary>
+    /// Represents a undirected edge
+    /// </summary>
     internal class Edge : IComparable<Edge>
     {
         private int _v, _w;

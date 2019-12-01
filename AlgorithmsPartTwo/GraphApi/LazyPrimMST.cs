@@ -7,6 +7,8 @@ namespace GraphApi
 {
     /// <summary>
     /// Computes the MST in time proportional to E log E and extra space proportional to E
+    /// Note the similarities between Dijkstra's algorithm (closest vertex to the source via directed path)
+    /// and Prim's algorithm (closest vertex to the tree via undirected edge)
     /// </summary>
     internal class LazyPrimMST
     {

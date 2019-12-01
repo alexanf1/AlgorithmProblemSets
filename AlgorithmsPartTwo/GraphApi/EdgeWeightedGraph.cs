@@ -5,6 +5,9 @@ using System.Text;
 
 namespace GraphApi
 {
+    /// <summary>
+    /// Represents an edge weighted undirected graph
+    /// </summary>
     internal class EdgeWeightedGraph
     {
         private int _vertices;

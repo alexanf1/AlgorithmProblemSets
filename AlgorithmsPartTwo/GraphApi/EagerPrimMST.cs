@@ -5,6 +5,9 @@ using DataStructureApi.PriorityQueue;
 
 namespace GraphApi
 {
+    /// <summary>
+    /// Biggest difference here is the use of the IndexMinPriority Queue
+    /// </summary>
     internal class EagerPrimMST
     {
         private bool[] _marked;
@@ -19,9 +22,11 @@ namespace GraphApi
             _distTo = new double[g.GetNumberOfVertices()];
             _edgeTo = new Edge[g.GetNumberOfVertices()];
 
+            // This is needed since we are trying to find the minimum edges
             for (int v = 0; v < g.GetNumberOfVertices(); v++)
                 _distTo[v] = double.MaxValue;
 
+            // This also takes into account minimal spanning forests...
             for (int v = 0; v < g.GetNumberOfVertices(); v++)
             {
                 if(!_marked[v])
@@ -52,11 +57,13 @@ namespace GraphApi
                 if (_marked[w])
                     continue;
 
+                // Check if the edge weight is less than the current shortest recording weight
                 if(e.Weight < _distTo[w])
                 {
                     _distTo[w] = e.Weight;
-                    _edgeTo[w] = e;
+                    _edgeTo[w] = e; // The end result, this array will result in holding all mst edges
 
+                    // Add or update keys and their values to the priority queue
                     if (_pq.Contains(w))
                         _pq.ChangeKey(w, _distTo[w]);
                     else
