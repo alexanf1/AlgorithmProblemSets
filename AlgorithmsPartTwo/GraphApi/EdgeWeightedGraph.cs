@@ -10,6 +10,7 @@ namespace GraphApi
         private int _vertices;
         private int _edges;
         private LinkedList<Edge>[] _adj;
+        private LinkedList<Edge> _allEdges; // TODO: may be redudant 
 
         /// <summary>
         /// Creates an empty graph with v vertices
@@ -17,6 +18,8 @@ namespace GraphApi
         /// <param name="v"></param>
         public EdgeWeightedGraph(int v)
         {
+            _allEdges = new LinkedList<Edge>();
+
             _vertices = v;
 
             _adj = new LinkedList<Edge>[_vertices];
@@ -70,11 +73,13 @@ namespace GraphApi
         /// <param name="w">The second vertex</param>
         public void AddEdge(Edge e)
         {
-            int v = e.GetEitherEdge();
-            int w = e.GetOtherEdge(v);
+            int v = e.GetEitherVertex();
+            int w = e.GetOtherVertex(v);
 
             _adj[v].AddLast(e);
             _adj[w].AddLast(e);
+
+            _allEdges.AddLast(e);
 
             _edges += 2;
         }
@@ -84,7 +89,7 @@ namespace GraphApi
         /// </summary>
         /// <param name="v">The vertex in question</param>
         /// <returns></returns>
-        ICollection<Edge> GetAdjacentEdges(int v)
+        public ICollection<Edge> GetAdjacentEdges(int v)
         {
             return _adj[v];
         }
@@ -94,9 +99,9 @@ namespace GraphApi
         /// </summary>
         /// <param name="v">The vertex in question</param>
         /// <returns></returns>
-        ICollection<Edge> GetAllEdges()
+        public ICollection<Edge> GetAllEdges()
         {
-            throw new NotImplementedException();
+            return _allEdges;
         }
 
         /// <summary>
@@ -112,9 +117,9 @@ namespace GraphApi
         /// Returns the number of edges in the entire graph
         /// </summary>
         /// <returns></returns>
-        int GetNumberOfEdges()
+        public int GetNumberOfEdges()
         {
-            return _edges;
+            return _edges / 2;
         }
 
         /// <summary>

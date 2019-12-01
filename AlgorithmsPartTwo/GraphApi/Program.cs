@@ -15,7 +15,15 @@ namespace GraphApi
 
             EdgeWeightedGraph g = EdgeWeightedGraph.CreateEdgeWeightGraphFromFile(filePath);
 
-            Console.WriteLine($"{g.ToString()}");
+            Console.WriteLine("EagerPrimMST");
+            EagerPrimMST mst = new EagerPrimMST(g);
+            foreach (Edge e in mst.GetEdges())
+                Console.WriteLine($"{e}");
+
+            Console.WriteLine("LazyPrimMST");
+            LazyPrimMST _mst = new LazyPrimMST(g);
+            foreach (Edge e in _mst.GetEdges())
+                Console.WriteLine($"{e}");
         }
     }
 }

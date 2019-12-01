@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataStructureApi.PriorityQueue
 {
-    public class MaxPriorityQueue<T> where T : IComparable<T>
+    public class MinPriorityQueue<T> where T : IComparable<T> 
     {
         private int _entries;
         private T[] _arr;
@@ -23,8 +23,11 @@ namespace DataStructureApi.PriorityQueue
         /// Creates a priority with a limit on capacity
         /// </summary>
         /// <param name="capacity">Total number of elements</param>
-        public MaxPriorityQueue(int capacity)
+        public MinPriorityQueue(int capacity)
         {
+            if (capacity <= 0)
+                throw new ArgumentException();
+
             // Adding one extra to the size in order to take into account the empty root
             _arr = new T[capacity + 1];
         }
@@ -39,8 +42,8 @@ namespace DataStructureApi.PriorityQueue
 
             // check if parent exists and if it is smaller than the current inserted element
             int k = _entries;
-            
-            while ((k/2) > 0 && greater(k, k / 2))
+
+            while ((k / 2) > 0 && lesser(k, k / 2))
             {
                 // if true than swap
                 swap(k, k / 2);
@@ -54,14 +57,14 @@ namespace DataStructureApi.PriorityQueue
         /// Returns and removes the largest key
         /// </summary>
         /// <returns></returns>
-        public T DeleteMax()
+        public T DeleteMin()
         {
             if (_entries < 0)
                 return default;
 
             T max = _arr[1]; // holds the maximum value
             swap(1, _entries); // swap the maximum with the last entry
-            _arr[_entries] = default; // delete the maximum
+            _arr[_entries] = default; // delete the minium
             _entries--;
             sink(1); // performing sink on the root
 
@@ -80,7 +83,7 @@ namespace DataStructureApi.PriorityQueue
         public override string ToString()
         {
             string output = string.Empty;
-            for(int i = 0; i < _arr.Length; i++)
+            for (int i = 0; i < _arr.Length; i++)
             {
                 output += $"idx:{i}, val:{_arr[i]}\n";
             }
@@ -88,20 +91,20 @@ namespace DataStructureApi.PriorityQueue
             return output;
         }
 
-        #region - Private Methods
+        #region Private Methods
         private void sink(int k)
         {
-            while (2*k <= _entries) // because of the balance property, if there is no left child then there is none at all)
+            while (2 * k <= _entries) // because of the balance property, if there is no left child then there is none at all)
             {
                 // first discover which child is larger before comparing with root
-                int j = 2*k;
-                if (j < _entries && greater(j + 1, j)) // is the right child larger than the left
+                int j = 2 * k;
+                if (j < _entries && lesser(j + 1, j)) // is the right child larger than the left
                 {
                     j++;
                 }
 
                 // 'j' now represents the larger of the two children
-                if (!greater(j, k))
+                if (!lesser(j, k))
                 {
                     break;
                 }
@@ -118,9 +121,9 @@ namespace DataStructureApi.PriorityQueue
             _arr[y] = temp;
         }
 
-        private bool greater(int x, int y)
+        private bool lesser(int x, int y)
         {
-            return 0 < _arr[x].CompareTo(_arr[y]);
+            return 0 > _arr[x].CompareTo(_arr[y]);
         }
         #endregion
     }

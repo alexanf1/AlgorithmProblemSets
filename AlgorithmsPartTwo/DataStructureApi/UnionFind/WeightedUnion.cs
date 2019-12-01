@@ -11,7 +11,7 @@ namespace DataStructureApi.UnionFind
     /// The weight improvement alones makes this an N + M log N, and with path compression
     /// this almost makes it linear... but not quite.
     /// </summary>
-    internal class WeightedUnion
+    public class WeightedUnion
     {
         private int _objects;
         private int[] _id;

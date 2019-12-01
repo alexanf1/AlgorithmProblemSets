@@ -18,7 +18,7 @@ namespace GraphApi
             _weight = weight;
         }
 
-        public int GetEitherEdge()
+        public int GetEitherVertex()
         {
             return _v;
         }
@@ -28,7 +28,7 @@ namespace GraphApi
         /// </summary>
         /// <param name="v"></param>
         /// <returns></returns>
-        public int GetOtherEdge(int v)
+        public int GetOtherVertex(int v)
         {
             return (_v == v) ? _w : _v;
         }
