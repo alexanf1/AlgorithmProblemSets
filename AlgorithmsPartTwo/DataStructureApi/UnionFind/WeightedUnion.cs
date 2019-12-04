@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using DataStructureApi.UnionFind.Interface;
 
 namespace DataStructureApi.UnionFind
 {
     /// <summary>
-    /// This demonstrates further improvements on the quick-union implementation using
-    /// a weigth and path compression adjustments.
-    /// The weight improvement alones makes this an N + M log N, and with path compression
+    /// This demonstrates further improvements on the quick-union implementation using weigth and path
+    /// compression adjustments.
+    /// The weight modification avoids having tall trees.
+    /// The weight improvement alones makes this an O(N + M log N), and with path compression
     /// this almost makes it linear... but not quite.
+    /// Performance:
+    /// initialize - O(N)
+    /// union - O(log N) * very few writes required
+    /// connected - O(log N)
+    /// weighted QU + path compression = O(N + M log* N)(practically linear)
     /// </summary>
-    public class WeightedUnion
+    public class WeightedUnion : IUnionFind
     {
         private int _objects;
         private int[] _id;
-        private int[] _sz;
+        private int[] _sz; // used to keep track of the number of objects in each tree
 
         public int Count => _objects;
 
@@ -69,25 +73,22 @@ namespace DataStructureApi.UnionFind
             }
         }
 
-        /// <summary>
-        /// Add a connection between p and q
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
+        /// <inheritdoc/>>
         public void AddUnion(int p, int q)
         {
             int i = Find(p);
             int j = Find(q);
 
-            // This is the portion of weighted improvement component
-            // Note: This prevents trying to union two objects that are already in the same set.
+            // prevents adding a connection that already exists.
             if (i == j)
                 return;
 
-            if(_sz[i] < _sz[j])
+            // This is the portion involving checking heights of each tree
+            // we use the roots to determine the height of each tree
+            if (_sz[i] < _sz[j])
             {
-                _id[i] = j;
-                _sz[j] += _sz[i];
+                _id[i] = j; // assign the root as usual
+                _sz[j] += _sz[i]; // since the root of i is now pointing to j, j has now grown. Add the objects
             }
             else
             {
@@ -96,30 +97,26 @@ namespace DataStructureApi.UnionFind
             }
         }
 
-        /// <summary>
-        /// Determine if p and q are in the same component
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public bool IsConnected(int p, int q)
         {
             return Find(p) == Find(q);
         }
 
         /// <summary>
-        /// Returns the component identifier for p
+        /// Returns the component identifier for vertex x
         /// </summary>
         /// <returns></returns>
-        private int Find(int p)
+        private int Find(int x)
         {
-            int root = p;
+            int root = x;
             while (_id[root] != root)
             {
                 // This is the path compression component
                 // make every node in path point to grandparent (halving path length search)
-                // not the same as flattening but it's definitely a huge improvement
+                // not the same as flattening completely but it's definitely a huge improvement
                 _id[root] = _id[_id[root]];
+
                 root = _id[root];
             }
 

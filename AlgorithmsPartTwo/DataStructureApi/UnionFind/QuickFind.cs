@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using DataStructureApi.UnionFind.Interface;
 
 namespace DataStructureApi.UnionFind
 {
     /// <summary>
-    /// The following implementation is based off a quick-find algorithm.
-    /// For every M union operations, we will have to perform N access lookups. N*M
+    /// The following implementation is based off a quick-find (eager) algorithm.
+    /// For every M union operations, we will have to perform N access lookups. O(N * M)
+    /// Note: It also benefical to think about the number or write vs read operations
+    /// Performance:
+    /// initialize - O(N)
+    /// union - O(N)* many writes required
+    /// connected - O(1)
     /// </summary>
-    internal class QuickFind
+    internal class QuickFind : IUnionFind
     {
         private int _objects;
         private int[] _id;
@@ -18,6 +21,7 @@ namespace DataStructureApi.UnionFind
 
         /// <summary>
         /// Createa union-find data strucutre with n objects
+        /// Notice that each vertex is represented with a unique id
         /// </summary>
         /// <param name="n"></param>
         public QuickFind(int n)
@@ -27,7 +31,7 @@ namespace DataStructureApi.UnionFind
 
             for (int i = 0; i < _id.Length; i++)
             {
-                _id[i] = i;
+                _id[i] = i; // assign a unique identifier
             }
         }
 
@@ -64,11 +68,7 @@ namespace DataStructureApi.UnionFind
             }
         }
 
-        /// <summary>
-        /// Add a connection between p and q
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
+        /// <inheritdoc/>
         public void AddUnion(int p, int q)
         {
             // anything that has the id of p now must be q 's id
@@ -79,6 +79,7 @@ namespace DataStructureApi.UnionFind
             if (prevId == newId)
                 return;
 
+            // loop through the entire array possible changing ids
             for (int i = 0; i < _id.Length; i++)
             {
                 if(_id[i] == prevId)
@@ -87,25 +88,21 @@ namespace DataStructureApi.UnionFind
                 }
             }
         }
-        
-        /// <summary>
-        /// Determine if p and q are in the same component
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
-        /// <returns></returns>
+
+        /// <inheritdoc/>
         public bool IsConnected(int p, int q)
         {
+            // if p and q have the same id then they are connected
             return _id[p] == _id[q];
         }
 
         /// <summary>
-        /// Returns the component identifier for p
+        /// Returns the component identifier for the vertex x
         /// </summary>
         /// <returns></returns>
-        private int Find(int p)
+        private int Find(int x)
         {
-            return _id[p];
+            return _id[x];
         }
 
         public override string ToString()

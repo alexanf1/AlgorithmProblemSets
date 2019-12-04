@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using DataStructureApi.UnionFind.Interface;
 
 namespace DataStructureApi.UnionFind
 {
     /// <summary>
-    /// The following is based off of a quick-union algorithm.
-    /// Although this algorithm may perform better on average, it is still not performant. N*M
+    /// The following implementation is based off of a quick union (lazy) algorithm.
+    /// Although this algorithm may perform better on average, it is still not performant. O(N * M)
     /// Think of the potential sizes of each tree and how large they can become.
+    /// Note: It also benefical to think about the number or write vs read operations
+    /// Performance:
+    /// initialize - O(N)
+    /// union - O(N) * very few writes required
+    /// connected - O(N)
     /// </summary>
-    internal class QuickUnion
+    internal class QuickUnion : IUnionFind
     {
         private int _objects;
         private int[] _id;
@@ -65,37 +68,35 @@ namespace DataStructureApi.UnionFind
             }
         }
 
-        /// <summary>
-        /// Add a connection between p and q
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
+        /// <inheritdoc/>
         public void AddUnion(int p, int q)
         {
+            // set the id of p's root to the id of q's root
+            // requires a look up for each root
             int i = Find(p);
             int j = Find(q);
+
+            // prevents adding a connection that already exists.
+            if (i == j)
+                return;
 
             _id[i] = j;
         }
 
-        /// <summary>
-        /// Determine if p and q are in the same component
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public bool IsConnected(int p, int q)
         {
             return Find(p) == Find(q);
         }
 
         /// <summary>
-        /// Returns the component identifier for p
+        /// Returns the component identifier for vertex x
         /// </summary>
         /// <returns></returns>
-        private int Find(int p)
+        private int Find(int x)
         {
-            int root = p;
+            // You can think of locating the root as id[id[id[....]]] until its equal to itself
+            int root = x;
             while (_id[root] != root)
             {
                 root = _id[root];
