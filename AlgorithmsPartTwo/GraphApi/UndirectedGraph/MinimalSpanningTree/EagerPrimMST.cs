@@ -2,13 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using DataStructureApi.PriorityQueue;
+using GraphApi.UndirectedGraph.Weighted;
+using GraphApi.Interfaces;
 
-namespace GraphApi.UndirectedGraph
+namespace GraphApi.UndirectedGraph.MinimalSpanningTree
 {
     /// <summary>
-    /// Biggest difference here is the use of the IndexMinPriority Queue
+    /// Biggest difference here is the use of the IndexMinPriority Queue and the queue only having 
+    /// at most ONE entry per VERTEX. If it already has the key, we update it.
+    /// 
+    /// [Performance]
+    ///     *Binary Heap (as seen below)
+    ///     - Insert:    Log V
+    ///     - DeleteMin: Log V
+    ///     - ChangeKey: Log V
+    ///     - O(n) = E Log V
     /// </summary>
-    internal class EagerPrimMST
+    internal class EagerPrimMST : IMinimumSpanningTree
     {
         private bool[] _marked;
         private double[] _distTo;
@@ -36,6 +46,7 @@ namespace GraphApi.UndirectedGraph
             }
         }
 
+        // This really where the algorithm begins...
         private void prim(EdgeWeightedGraph g, int v)
         {
             _distTo[v] = 0.0;
@@ -52,13 +63,14 @@ namespace GraphApi.UndirectedGraph
             _marked[v] = true;
             foreach(Edge e in g.GetAdjacentEdges(v))
             {
+                // Notice how this looks very similar to the relax portion of a shortest path algorithm
                 int w = e.GetOtherVertex(v);
 
                 if (_marked[w])
                     continue;
 
                 // Check if the edge weight is less than the current shortest recording weight
-                if(e.Weight < _distTo[w])
+                if(_distTo[w] > e.Weight)
                 {
                     _distTo[w] = e.Weight;
                     _edgeTo[w] = e; // The end result, this array will result in holding all mst edges
@@ -72,10 +84,7 @@ namespace GraphApi.UndirectedGraph
             }
         }
 
-        /// <summary>
-        /// Returns all the edges og a given graph that are part of the MST
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public ICollection<Edge> GetEdges()
         {
             LinkedList<Edge> mst = new LinkedList<Edge>();
@@ -89,6 +98,21 @@ namespace GraphApi.UndirectedGraph
             }
 
             return mst;
+        }
+
+        /// <inheritdoc/>
+        public double GetWeight()
+        {
+            double totalWeight = 0;
+            for (int v = 0; v < _edgeTo.Length; v++)
+            {
+                Edge e = _edgeTo[v];
+                if (e != null)
+                {
+                    totalWeight += e.Weight;
+                }
+            }
+            return totalWeight;
         }
     }
 }

@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DataStructureApi.PriorityQueue.Interfaces;
 
 namespace DataStructureApi.PriorityQueue
 {
-    public class MinPriorityQueue<T> where T : IComparable<T> 
+    /// <summary>
+    /// **See notes from MaxPriorityQueue
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class MinPriorityQueue<T> : IMinPriorityQueue<T> where T : IComparable<T>
     {
         private int _entries;
         private T[] _arr;
@@ -15,7 +20,7 @@ namespace DataStructureApi.PriorityQueue
         public int Size => _entries;
 
         /// <summary>
-        /// Returns the largest key
+        /// Returns the smallest key
         /// </summary>
         public T Max => _arr[1];
 
@@ -37,24 +42,12 @@ namespace DataStructureApi.PriorityQueue
         /// </summary>
         public void insert(T key)
         {
-            _entries++;
-            _arr[_entries] = key;
-
-            // check if parent exists and if it is smaller than the current inserted element
-            int k = _entries;
-
-            while ((k / 2) > 0 && lesser(k, k / 2))
-            {
-                // if true than swap
-                swap(k, k / 2);
-
-                // repeat but now examining the new parent
-                k = (k / 2);
-            }
+            _arr[++_entries] = key;
+            PromoteKey(_entries);
         }
 
         /// <summary>
-        /// Returns and removes the largest key
+        /// Returns and removes the smallest key
         /// </summary>
         /// <returns></returns>
         public T DeleteMin()
@@ -62,13 +55,12 @@ namespace DataStructureApi.PriorityQueue
             if (_entries < 0)
                 return default;
 
-            T max = _arr[1]; // holds the maximum value
-            swap(1, _entries); // swap the maximum with the last entry
-            _arr[_entries] = default; // delete the minium
-            _entries--;
-            sink(1); // performing sink on the root
+            T min = _arr[1]; // holds the minimum value
+            ExchangeKeys(1, _entries--); // swap the minimum with the last entry
+            _arr[_entries + 1] = default; // delete the minium
+            DemoteKey(1); // performing sink on the root
 
-            return max;
+            return min;
         }
 
         /// <summary>
@@ -92,36 +84,71 @@ namespace DataStructureApi.PriorityQueue
         }
 
         #region Private Methods
-        private void sink(int k)
+        /// <summary>
+        /// Exchange key in smaller child with key in parent
+        /// </summary>
+        /// <param name="k"></param>
+        private void PromoteKey(int k)
         {
-            while (2 * k <= _entries) // because of the balance property, if there is no left child then there is none at all)
+            // 'k/2' represents the parent node of node 'k'
+            while (k > 1 && IsNodeKeySmallerThanParent(k, k / 2))
             {
-                // first discover which child is larger before comparing with root
-                int j = 2 * k;
-                if (j < _entries && lesser(j + 1, j)) // is the right child larger than the left
+                // if node's key is smaller than parent, swap keys
+                ExchangeKeys(k, k / 2);
+
+                // repeat this process until heap order is restored
+                k = (k / 2);
+            }
+        }
+
+        /// <summary>
+        /// Exchange key in parent with key in smaller child
+        /// </summary>
+        /// <param name="k"></param>
+        private void DemoteKey(int k)
+        {
+            // 2*k represents the child's node
+            while (2 * k <= _entries)
+            {
+                // first discover which child is smaller before comparing with root
+                int j = 2 * k; // represents left child
+                if (j < _entries && IsNodeKeySmallerThanParent(j + 1, j)) // is the right child smaller than the left
                 {
                     j++;
                 }
 
-                // 'j' now represents the larger of the two children
-                if (!lesser(j, k))
+                // 'j' now represents the smaller of the two children
+                if (!IsNodeKeySmallerThanParent(j, k))
                 {
                     break;
                 }
 
-                swap(k, j);
+                ExchangeKeys(k, j);
+
+                // Repeat until heap order is restored
                 k = j;
             }
         }
 
-        private void swap(int x, int y)
+        /// <summary>
+        /// Swap keys
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void ExchangeKeys(int x, int y)
         {
             T temp = _arr[x];
             _arr[x] = _arr[y];
             _arr[y] = temp;
         }
 
-        private bool lesser(int x, int y)
+        /// <summary>
+        /// Determines if a node has a smaller key than their parent/sibling
+        /// </summary>
+        /// <param name="x">node 'x'</param>
+        /// <param name="y">parent/sibling node of 'x'</param>
+        /// <returns></returns>
+        private bool IsNodeKeySmallerThanParent(int x, int y)
         {
             return 0 > _arr[x].CompareTo(_arr[y]);
         }

@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 using DataStructureApi.PriorityQueue;
+using GraphApi.UndirectedGraph.Weighted;
+using GraphApi.Interfaces;
 
 namespace GraphApi.UndirectedGraph
 {
     /// <summary>
     /// Computes the MST in time proportional to E log E and extra space proportional to E
+    /// Start with a vertex and greedily grow tree T.
+    /// At to T the min weighted edge and repeat.
+    /// [Performance]
+    ///     - Delete Min: E * Log E
+    ///     - Insert:     E * Log E
+    ///     - O(E Log E)
+    /// 
     /// Note the similarities between Dijkstra's algorithm (closest vertex to the source via directed path)
     /// and Prim's algorithm (closest vertex to the tree via undirected edge)
     /// </summary>
-    internal class LazyPrimMST
+    internal class LazyPrimMST : IMinimumSpanningTree
     {
         private bool[] _marked;
         private MinPriorityQueue<Edge> _pq;
@@ -23,6 +32,7 @@ namespace GraphApi.UndirectedGraph
             _pq = new MinPriorityQueue<Edge>(g.GetNumberOfEdges());
             _marked = new bool[g.GetNumberOfVertices()];
 
+            // Begin growing the tree by starting with the first vertex
             Visit(g, 0);
 
             while(!_pq.IsEmpty())
@@ -57,19 +67,13 @@ namespace GraphApi.UndirectedGraph
             }
         }
 
-        /// <summary>
-        /// Returns all the edges of a given graph that are part of the MST
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public ICollection<Edge> GetEdges()
         {
             return _mst;
         }
 
-        /// <summary>
-        /// Returns the total weight of the MST
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public double GetWeight()
         {
             return _totalWeight;

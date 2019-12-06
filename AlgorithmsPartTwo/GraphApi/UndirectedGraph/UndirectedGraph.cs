@@ -4,6 +4,29 @@ using GraphApi.Interfaces;
 
 namespace GraphApi.UndirectedGraph
 {
+    /// <summary>
+    /// *Note that an you can maintain a list of edges as a Linked List or an Array.
+    /// 
+    /// List of Edges vs Adjacency-Matrix vs Adjacency-List representation
+    /// [Performance - List of edges]
+    ///     Space:.............................. E
+    ///     Add Edge:........................... 1
+    ///     Edge exists between v and w:........ E
+    ///     Iterate over vertices adjacent to v: E
+    /// [Performance - Adjacency-Matrix]
+    ///     Space:.............................. V^2
+    ///     Add Edge:........................... 1 (disallows parallel edges)
+    ///     Edge exists between v and w:........ 1
+    ///     Iterate over vertices adjacent to v: V
+    /// [Performance - Adjacency-List]
+    ///     Space:.............................. E + V
+    ///     Add Edge:........................... 1
+    ///     Edge exists between v and w:........ degree(V)
+    ///     Iterate over vertices adjacent to v: degree(V)
+    /// 
+    /// *In practice most graphs are sparse (Large number of Vertices, Small amount of edges)
+    /// *Therefore, it is wise to use an adjacency-list as an underlying representation of a graph
+    /// </summary>
     internal class UndirectedGraph : IGraph
     {
         private int _vertices;
@@ -82,7 +105,6 @@ namespace GraphApi.UndirectedGraph
             return _vertices;
         }
 
-        /// <inheritdoc/>
         public override string ToString()
         {
             string output = string.Empty;

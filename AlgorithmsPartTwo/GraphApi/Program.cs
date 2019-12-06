@@ -1,5 +1,6 @@
 ﻿using GraphApi.UndirectedGraph;
 using System;
+using GraphApi.DirectGraph;
 
 namespace GraphApi
 {
@@ -7,19 +8,13 @@ namespace GraphApi
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\AlgorithmProblemSets\\GraphWeighted.txt";
+            string filePath = "C:\\AlgorithmProblemSets\\GraphWeighted2.txt";
 
-            EdgeWeightedGraph g = EdgeWeightedGraph.CreateEdgeWeightGraphFromFile(filePath);
+            //DirectedEdgeWeightedGraph g = DirectedEdgeWeightedGraph.CreateEdgeWeightGraphFromFile(filePath);
 
-            Console.WriteLine("EagerPrimMST");
-            EagerPrimMST mst = new EagerPrimMST(g);
-            foreach (Edge e in mst.GetEdges())
-                Console.WriteLine($"{e}");
+            //DepthFirstOrder dfo = new DepthFirstOrder(g);
 
-            Console.WriteLine("\nLazyPrimMST");
-            LazyPrimMST _mst = new LazyPrimMST(g);
-            foreach (Edge e in _mst.GetEdges())
-                Console.WriteLine($"{e}");
+            //Console.WriteLine($"{g}");
         }
     }
 }

@@ -2,12 +2,20 @@
 
 namespace DataStructureApi.PriorityQueue
 {
+    /// <summary>
+    /// A cleass representing an index min priority queue where the priority of a key can change
+    /// 
+    /// Associate an index between 0 and N - 1 with each key in a priority queue.
+    /// Client can change the key by specifying the index
+    ///     
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class IndexMinPriorityQueue<T> where T : IComparable<T>
     {
         private int _entries;
-        private T[] _keys; // represents the priority of i _keys[i]
-        private int[] _pq; // represents the index of the key in heap position _pq[i]
-        private int[] _qp; // represents the heap position of the key with index _qp[i]
+        private T[] _keys; // _key[i] is the priority of i
+        private int[] _pq; // _pq[i] is the index of the key in heap position i
+        private int[] _qp; // _qp[i] is the heap position of the key with index i
 
         /// <summary>
         /// The number of entries in the priority queue
@@ -50,8 +58,8 @@ namespace DataStructureApi.PriorityQueue
             _entries++;
 
             _keys[i] = key;
-            _pq[_entries] = i; // given a heap position you want to return the key index
-            _qp[i] = _entries; // given a key index you want to return the heap position
+            _pq[_entries] = i; // given a heap position you want to return the key index 'i'
+            _qp[i] = _entries; // given a key index 'i' you want to return the heap position
 
             // _entries represents the latest heap position
             swim(_entries);
@@ -63,11 +71,12 @@ namespace DataStructureApi.PriorityQueue
         /// <param name="key"></param>
         public void ChangeKey(int i, T key)
         {
-            // Note: you could keep this strict and simply only allow increases or decreases
+            // Note: you need to keep this strict and simply only allow increases or decreases
 
             _keys[i] = key; // assign new key given the index position
 
             // use the given key index to find the heap position (with _qp) to begin sink operation
+            // This only works when the key is smaller than the original
             swim(_qp[i]);
         }
 
@@ -151,10 +160,7 @@ namespace DataStructureApi.PriorityQueue
         {
             while ((k / 2) > 0 && lesser(k, k / 2))
             {
-                // if true than swap
                 swap(k, k / 2);
-
-                // repeat but now examining the new parent
                 k = (k / 2);
             }
         }
@@ -169,6 +175,12 @@ namespace DataStructureApi.PriorityQueue
             _qp[_pq[y]] = y;
         }
 
+        /// <summary>
+        /// 'x' and 'y' represent heap positions to compare
+        /// </summary>
+        /// <param name="x">heap position x</param>
+        /// <param name="y">heap position y</param>
+        /// <returns></returns>
         private bool lesser(int x, int y)
         {
             return _keys[_pq[x]].CompareTo(_keys[_pq[y]]) < 0;

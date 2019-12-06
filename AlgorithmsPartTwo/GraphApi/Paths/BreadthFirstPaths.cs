@@ -3,6 +3,9 @@ using GraphApi.Interfaces;
 
 namespace GraphApi.Paths
 {
+    /// <summary>
+    /// BFS is best used to find the shortest path with non weighted edge graphs
+    /// </summary>
     internal class BreadthFirstPaths : IPath
     {
         private int[] _edgeTo;
@@ -20,6 +23,8 @@ namespace GraphApi.Paths
 
         private void BFS(IGraph g, int v)
         {
+            // Create queue and add the source vertex
+            // Set distance to 0
             Queue<int> queue = new Queue<int>();
             queue.Enqueue(v);
             _distTo[v] = 0;
@@ -32,8 +37,8 @@ namespace GraphApi.Paths
                     if(_distTo[z] == null)
                     {
                         queue.Enqueue(z);
-                        _edgeTo[z] = w;
-                        _distTo[z] = _distTo[w] + 1;
+                        _edgeTo[z] = w; // Keep track of the previous edge by assigning the parent 'w'
+                        _distTo[z] = _distTo[w] + 1; // Safe since source node is assigned 0 for distTo
                     }
                 }
             }

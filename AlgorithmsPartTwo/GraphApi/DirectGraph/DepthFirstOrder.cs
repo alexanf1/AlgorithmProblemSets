@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using GraphApi.Interfaces;
 
 namespace GraphApi.DirectGraph
 {
     /// <summary>
-    /// Computes the reverse post order of a graph. This can also be considered the topological sort order if 
+    /// Computes the reverse DFS post order of a DAG (directed acyclic graph). 
+    /// This can also be considered the topological sort order if 
     /// the graph also happens to be a Directed Acyclic Graph (DAG).
+    /// Topological sort order can solve problems dealing with precedence contraints. Think of a DAG where
+    /// all the directed edges point upward.
+    /// 
+    /// Note: Topological sort is impossible when there is a cycle!
     /// </summary>
     internal class DepthFirstOrder
     {
         private bool[] _marked;
-        private Stack<int> _reversePostOrder;
+        private Stack<int> _reversePostOrder; // A stack is required in order to return a collection in post order.
 
         /// <summary>
-        /// The reverse post order of an acyclic digraph is also the topological order
+        /// The reverse DFS post order of an acyclic digraph is also the topological order
         /// </summary>
         public IEnumerable<int> GetReversePostOrder => _reversePostOrder;
 
-        public DepthFirstOrder(DirectedGraph g)
+        public DepthFirstOrder(Digraph g)
         {
             _marked = new bool[g.GetNumberOfVertices()];
             _reversePostOrder = new Stack<int>();
@@ -32,7 +36,7 @@ namespace GraphApi.DirectGraph
             }
         }
 
-        private void DFS(DirectedGraph g, int v)
+        private void DFS(Digraph g, int v)
         {
             _marked[v] = true;
             foreach (int w in g.GetAdjacentVertices(v))

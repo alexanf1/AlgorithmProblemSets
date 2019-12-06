@@ -15,7 +15,7 @@ namespace GraphApi.Interfaces
         void AddEdge(int v, int w);
 
         /// <summary>
-        /// Returns an ICollection of all adjacent vertices of vertex v
+        /// Returns a collection of all adjacent vertices of vertex v
         /// </summary>
         /// <param name="v">The vertex in question</param>
         /// <returns></returns>
@@ -32,11 +32,5 @@ namespace GraphApi.Interfaces
         /// </summary>
         /// <returns></returns>
         int GetNumberOfEdges();
-
-        /// <summary>
-        /// String representation of a graph
-        /// </summary>
-        /// <returns></returns>
-        string ToString();
     }
 }

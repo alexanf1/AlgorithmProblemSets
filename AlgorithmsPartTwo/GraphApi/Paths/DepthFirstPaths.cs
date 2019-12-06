@@ -3,10 +3,13 @@ using GraphApi.Interfaces;
 
 namespace GraphApi.Paths
 {
+    /// <summary>
+    /// DFS is better to use if you plan on visiting all the nodes in the graph
+    /// </summary>
     internal class DepthFirstPaths : IPath
     {
-        private bool[] _marked;
-        private int[] _edgeTo;
+        private bool[] _marked; // marked[v] = true if v connected to s
+        private int[] _edgeTo; // edgeTo[v] = previous vertex on path from s to v
         private int _source;
 
         /// <summary>
@@ -23,6 +26,7 @@ namespace GraphApi.Paths
             DFS(graph, source);
         }
 
+        // Notice the implicit use of the stack which happens with recursion
         private void DFS(IGraph g, int v)
         {
             _marked[v] = true;
@@ -31,7 +35,7 @@ namespace GraphApi.Paths
                 if(!_marked[w])
                 {
                     DFS(g, w);
-                    _edgeTo[w] = v;
+                    _edgeTo[w] = v; // assigns each adjacent node of 'v', 'v' has the previous node
                 }
             }
         }

@@ -8,14 +8,14 @@ namespace GraphApi.Interfaces
     internal interface IPath
     {
         /// <summary>
-        /// Determines if there is a connected path to v
+        /// Determines if there is a connected path to v from the source vertex 's'
         /// </summary>
         /// <param name="v">The destination vertex 'v'</param>
         /// <returns></returns>
         bool HasPathTo(int v);
 
         /// <summary>
-        /// Returns a collection representing a path from s to v.
+        /// Returns a enumerable collection representing a path from the source vertex 's' to v.
         /// </summary>
         /// <param name="v"></param>
         /// <returns>If null then no path exists</returns>

@@ -73,7 +73,7 @@ namespace DataStructureApi.UnionFind
             }
         }
 
-        /// <inheritdoc/>>
+        /// <inheritdoc/>
         public void AddUnion(int p, int q)
         {
             int i = Find(p);

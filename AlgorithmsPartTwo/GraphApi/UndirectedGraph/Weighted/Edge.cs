@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace GraphApi.UndirectedGraph
+namespace GraphApi.UndirectedGraph.Weighted
 {
     /// <summary>
     /// Represents a undirected edge

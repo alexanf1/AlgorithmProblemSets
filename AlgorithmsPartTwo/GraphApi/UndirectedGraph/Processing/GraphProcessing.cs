@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphApi.UndirectedGraph
+namespace GraphApi.UndirectedGraph.Processing
 {
     static class GraphProcessing
     {

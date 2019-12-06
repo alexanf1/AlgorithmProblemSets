@@ -6,14 +6,16 @@ namespace GraphApi.DirectGraph
 {
     /// <summary>
     /// A data structure representation of a digraph (directed graph)
+    /// 
+    /// *See comments in UndirectedGraph.cs for more information including performance
     /// </summary>
-    internal class DirectedGraph : IGraph
+    internal class Digraph : IGraph
     {
         private int _vertices;
         private int _edges;
         private LinkedList<int>[] _adj;
 
-        public static DirectedGraph InitializeGraph(string fileName)
+        public static Digraph InitializeGraph(string fileName)
         {
             try
             {   // Open the text file using a stream reader.
@@ -24,7 +26,7 @@ namespace GraphApi.DirectGraph
                     int vertices = int.Parse(sr.ReadLine());
                     int edges = int.Parse(sr.ReadLine());
 
-                    DirectedGraph g = new DirectedGraph(vertices);
+                    Digraph g = new Digraph(vertices);
 
                     while (!sr.EndOfStream)
                     {
@@ -48,7 +50,7 @@ namespace GraphApi.DirectGraph
         /// Contructs a graph with a fixed number of vertices
         /// </summary>
         /// <param name="vertices">total number of vertices in the graph</param>
-        public DirectedGraph(int vertices)
+        public Digraph(int vertices)
         {
             _vertices = vertices;
 
@@ -84,9 +86,13 @@ namespace GraphApi.DirectGraph
             return _vertices;
         }
 
-        public DirectedGraph GetReverse()
+        /// <summary>
+        /// Reverses this digraph.
+        /// </summary>
+        /// <returns></returns>
+        public Digraph GetReverse()
         {
-            DirectedGraph reversedGraph = new DirectedGraph(_vertices);
+            Digraph reversedGraph = new Digraph(_vertices);
             for (int v = 0; v < _adj.Length; v++)
             {
                 foreach (int w in _adj[v])
