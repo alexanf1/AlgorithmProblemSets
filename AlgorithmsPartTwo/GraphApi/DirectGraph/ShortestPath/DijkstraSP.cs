@@ -24,6 +24,8 @@ namespace GraphApi.DirectGraph.ShortestPath
     ///     - DeleteMin: Log V
     ///     - ChangeKey: Log V
     ///     - O(n) = E Log V
+    /// [Space]
+    ///     - O(V)
     ///     
     /// Note: An unordered PQ implementation would be better suited if we were dealing with a dense graph
     /// aka lots of edges and few vertices.

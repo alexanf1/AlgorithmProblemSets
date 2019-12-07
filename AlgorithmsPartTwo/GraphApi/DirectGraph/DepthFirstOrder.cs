@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GraphApi.Interfaces;
+using GraphApi.DirectGraph.Weighted;
 
 namespace GraphApi.DirectGraph
 {
@@ -22,7 +23,7 @@ namespace GraphApi.DirectGraph
         /// </summary>
         public IEnumerable<int> GetReversePostOrder => _reversePostOrder;
 
-        public DepthFirstOrder(Digraph g)
+        public DepthFirstOrder(IGraph g)
         {
             _marked = new bool[g.GetNumberOfVertices()];
             _reversePostOrder = new Stack<int>();
@@ -36,7 +37,37 @@ namespace GraphApi.DirectGraph
             }
         }
 
-        private void DFS(Digraph g, int v)
+        public DepthFirstOrder(EdgeWeightedDigraph g)
+        {
+            _marked = new bool[g.GetNumberOfVertices()];
+            _reversePostOrder = new Stack<int>();
+
+            for (int v = 0; v < g.GetNumberOfVertices(); v++)
+            {
+                if (!_marked[v])
+                {
+                    DFS(g, v);
+                }
+            }
+        }
+
+        private void DFS(EdgeWeightedDigraph g, int v)
+        {
+            _marked[v] = true;
+            foreach (DirectedEdge e in g.GetAdjacentEdges(v))
+            {
+                int w = e.GetTo();
+
+                if (!_marked[w])
+                {
+                    DFS(g, w);
+                }
+            }
+
+            _reversePostOrder.Push(v);
+        }
+
+        private void DFS(IGraph g, int v)
         {
             _marked[v] = true;
             foreach (int w in g.GetAdjacentVertices(v))

@@ -1,6 +1,7 @@
 ﻿using GraphApi.UndirectedGraph;
 using System;
-using GraphApi.DirectGraph;
+using GraphApi.DirectGraph.Weighted;
+using GraphApi.DirectGraph.ShortestPath;
 
 namespace GraphApi
 {
@@ -10,11 +11,15 @@ namespace GraphApi
         {
             string filePath = "C:\\AlgorithmProblemSets\\GraphWeighted2.txt";
 
-            //DirectedEdgeWeightedGraph g = DirectedEdgeWeightedGraph.CreateEdgeWeightGraphFromFile(filePath);
+            EdgeWeightedDigraph d = EdgeWeightedDigraph.CreateEdgeWeightGraphFromFile(filePath);
+            //EdgeWeightedDigraph d = new EdgeWeightedDigraph(7);
+            //d.AddEdge(new DirectedEdge(0, 2, 1));
 
-            //DepthFirstOrder dfo = new DepthFirstOrder(g);
-
-            //Console.WriteLine($"{g}");
+            BellmanFordSp sp = new BellmanFordSp(d, 0);
+            foreach(DirectedEdge e in sp.GetPathTo(3))
+            {
+                Console.WriteLine($"{e}");
+            }
         }
     }
 }
