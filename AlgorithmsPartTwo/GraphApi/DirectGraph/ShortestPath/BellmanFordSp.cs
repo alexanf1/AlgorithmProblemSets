@@ -36,6 +36,10 @@ namespace GraphApi.DirectGraph.ShortestPath
         private Queue<int> _queue;
         private bool[] _onQueue;
 
+        private int _totalCalls;
+        private bool _negativeCyclePresent;
+        private DirectedEdge _negativeEdge;
+
         public BellmanFordSp(EdgeWeightedDigraph g, int s)
         {
             _edgeTo = new DirectedEdge[g.GetNumberOfVertices()];
@@ -50,10 +54,11 @@ namespace GraphApi.DirectGraph.ShortestPath
             _queue.Enqueue(s);
             _onQueue[s] = true;
 
-            while(_queue.Count > 0)
+            while(_queue.Count > 0 && !_negativeCyclePresent)
             {
                 int v = _queue.Dequeue();
                 _onQueue[v] = false;
+                ++_totalCalls;
                 foreach (DirectedEdge e in g.GetAdjacentEdges(v))
                 {
                     RelaxEdge(g, e);
@@ -77,6 +82,12 @@ namespace GraphApi.DirectGraph.ShortestPath
                     _queue.Enqueue(w);
                     _onQueue[w] = true;
                 }
+
+                if(_totalCalls % g.GetNumberOfVertices() == 0)
+                {
+                    _negativeCyclePresent = true;
+                    _negativeEdge = e;
+                }
             }
         }
 
@@ -93,12 +104,25 @@ namespace GraphApi.DirectGraph.ShortestPath
 
         public bool HasNegativeCycle()
         {
-            throw new NotImplementedException();
+            return _negativeCyclePresent;
         }
 
         public IEnumerable<DirectedEdge> GetNegativeCycle()
         {
-            throw new NotImplementedException();
+            if (HasNegativeCycle() == false)
+                return null;
+
+            Stack<DirectedEdge> st = new Stack<DirectedEdge>();
+
+            DirectedEdge ne = _negativeEdge;
+            while(ne.GetFrom() != _negativeEdge.GetTo())
+            {
+                st.Push(ne);
+                ne = _edgeTo[ne.GetFrom()];
+            }
+            st.Push(ne);
+
+            return st;
         }
     }
 }
