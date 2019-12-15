@@ -7,13 +7,15 @@ namespace DataStructureApi.UnionFind
     /// This demonstrates further improvements on the quick-union implementation using weigth and path
     /// compression adjustments.
     /// The weight modification avoids having tall trees.
-    /// The weight improvement alones makes this an O(N + M log N), and with path compression
+    /// The weight improvement alone makes this an O(N + M log N), and with path compression
     /// this almost makes it linear... but not quite.
+    /// 
     /// Performance:
-    /// initialize - O(N)
-    /// union - O(log N) * very few writes required
-    /// connected - O(log N)
-    /// weighted QU + path compression = O(N + M log* N)(practically linear)
+    ///     initialize - O(N)
+    ///     union - O(log N) *very few writes required
+    ///     connected - O(log N)
+    /// 
+    /// Note: weighted QU + path compression = O(N + M log* N)(practically linear)
     /// </summary>
     public class WeightedUnion : IUnionFind
     {

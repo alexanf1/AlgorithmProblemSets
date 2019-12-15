@@ -6,11 +6,14 @@ namespace DataStructureApi.UnionFind
     /// <summary>
     /// The following implementation is based off a quick-find (eager) algorithm.
     /// For every M union operations, we will have to perform N access lookups. O(N * M)
-    /// Note: It also benefical to think about the number or write vs read operations
+    /// Determining if two objects are connected can be done in constant time.
+    /// 
+    /// Note: It also benefical to think about the number of write vs read operations
+    /// 
     /// Performance:
-    /// initialize - O(N)
-    /// union - O(N)* many writes required
-    /// connected - O(1)
+    ///     initialize - O(N)
+    ///     union - O(N)* many potential writes required
+    ///     connected - O(1)
     /// </summary>
     internal class QuickFind : IUnionFind
     {

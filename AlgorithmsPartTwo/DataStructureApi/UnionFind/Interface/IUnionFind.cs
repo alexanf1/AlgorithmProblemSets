@@ -2,6 +2,9 @@
 {
     /// <summary>
     /// A interface representing the commands for a union-find data structure
+    /// 
+    /// Definitions:
+    ///     Connected Components: The maximal set of objects that are mutually connected.
     /// </summary>
     interface IUnionFind
     {

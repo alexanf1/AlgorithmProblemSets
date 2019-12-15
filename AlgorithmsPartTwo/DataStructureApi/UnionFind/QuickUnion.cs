@@ -7,11 +7,13 @@ namespace DataStructureApi.UnionFind
     /// The following implementation is based off of a quick union (lazy) algorithm.
     /// Although this algorithm may perform better on average, it is still not performant. O(N * M)
     /// Think of the potential sizes of each tree and how large they can become.
+    /// 
     /// Note: It also benefical to think about the number or write vs read operations
+    /// 
     /// Performance:
-    /// initialize - O(N)
-    /// union - O(N) * very few writes required
-    /// connected - O(N)
+    ///     initialize - O(N)
+    ///     union - O(N) *many read operations but low writes
+    ///     connected - O(N) *many read operations
     /// </summary>
     internal class QuickUnion : IUnionFind
     {
